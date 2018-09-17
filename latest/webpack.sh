@@ -1,10 +1,9 @@
 #! /bin/sh
-if [ ! -e /app/webpack/package.json ]; then
-  cp package.json webpack/
+if [ ! -e /app/package.json ]; then
+  cp /tmp/package.json /app/
 fi
-if [ ! -e /app/webpack/webpack.config.js ]; then
-  cp webpack.config.js webpack/
+if [ ! -e /app/webpack.config.js ]; then
+  cp /tmp/webpack.config.js /app/
 fi
-cd webpack
 yarn install --no-progress
 npx webpack

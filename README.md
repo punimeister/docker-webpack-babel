@@ -64,7 +64,7 @@ services:
       OUT_DIR: './web/public'
       OUT_FILE: 'bundle.js'
     volumes:
-    - '.:/app/webpack'
+    - '.:/app'
 ```
 
 ### index.html
