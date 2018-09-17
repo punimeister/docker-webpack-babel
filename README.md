@@ -46,6 +46,7 @@ Will be used for webpack output filename
 
 ```
 node_modules
+*.js.map
 ```
 
 ### docker-compose.yml
