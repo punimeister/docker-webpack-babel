@@ -1,11 +1,10 @@
 FROM node:8.11-alpine
 
-COPY webpack.common.js webpack.dev.js webpack.prod.js \
-     package.json webpack.sh /app/
+COPY package.json webpack.config.js webpack.sh /app/
 
 WORKDIR /app
 
-RUN yarn install --no-progress
+RUN mkdir -m 644 webpack
 
 ENV MODE='development' \
     ENTRY='' \
