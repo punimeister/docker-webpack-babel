@@ -15,9 +15,10 @@
 
 Will be used for webpack mode
 
-### `ENTRY`
+### `ENTRY_*`
 
-Will be used for webpack entry point
+Will be used for webpack entry points  
+(See examples for details)
 
 ### `OUT_DIR`
 
@@ -39,7 +40,8 @@ Will be used for webpack output filename
     ├── public
     │   └── index.html
     └── src
-        └── entry.js
+        ├── entry1.js
+        └── entry2.js
 ```
 
 ### .gitignore
@@ -61,9 +63,10 @@ services:
     restart: 'on-failure'
     environment:
       MODE: 'development'
-      ENTRY: './web/src/entry.js'
+      ENTRY_test1: './web/src/entry1.js'
+      ENTRY_test2: './web/src/entry2.js'
       OUT_DIR: './web/public'
-      OUT_FILE: 'bundle.js'
+      OUT_FILE: '[name].bundle.js'
     volumes:
     - '.:/app'
 ```
@@ -79,14 +82,20 @@ services:
 </head>
 <body>
   <div id="test"></div>
-  <script src="bundle.js"></script>
+  <script src="test1.bundle.js"></script>
+  <script src="test2.bundle.js"></script>
 </body>
 </html>
 ```
 
-### entry.js
+### entry1.js
 
 ```
 document.getElementById('test').innerText = 'hello webpack';
 ```
 
+### entry2.js
+
+```
+document.getElementById('test').style.color = 'skyblue';
+```
