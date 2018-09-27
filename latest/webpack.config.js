@@ -48,6 +48,9 @@ const commonConfig = {
       },
     ],
   },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
 };
 
 const developmentConfig = {
