@@ -29,7 +29,7 @@ const entry = '' || pickEntriesFromEnv();
  * @type {string}
  * @link https://webpack.js.org/concepts/output/
  */
-const outputFile = '' || outputFile;
+const outputFile = '' || process.env.OUT_FILE;
 
 
 /*************************************************
