@@ -68,7 +68,7 @@ services:
       OUT_DIR: './web/public'
       OUT_FILE: '[name].bundle.js'
     volumes:
-    - '.:/app'
+      - '.:/app'
 ```
 
 ### index.html
