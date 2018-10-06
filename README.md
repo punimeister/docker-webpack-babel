@@ -82,8 +82,8 @@ services:
 </head>
 <body>
   <div id="test"></div>
-  <script src="test1.bundle.js"></script>
-  <script src="test2.bundle.js"></script>
+  <script src="test1.js"></script>
+  <script src="test2.js"></script>
 </body>
 </html>
 ```
