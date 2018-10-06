@@ -66,7 +66,7 @@ services:
       ENTRY_test1: './web/src/entry1.js'
       ENTRY_test2: './web/src/entry2.js'
       OUT_DIR: './web/public'
-      OUT_FILE: '[name].bundle.js'
+      OUT_FILE: '[name].js'
     volumes:
       - '.:/app'
 ```
