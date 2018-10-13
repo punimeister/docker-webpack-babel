@@ -58,7 +58,13 @@ const commonConfig = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
-          presets: ['@babel/env'],
+          presets: [
+            '@babel/preset-env',
+            '@babel/preset-react',
+          ],
+          plugins: [
+            '@babel/plugin-transform-runtime',
+          ],
         },
       },
     ],
