@@ -1,4 +1,7 @@
 #! /bin/sh
+if [ ! -e /app/.babelrc ]; then
+  cp /tmp/.babelrc /app/.babelrc
+fi
 if [ ! -e /app/package.json ]; then
   cp /tmp/package.json /app/
 fi

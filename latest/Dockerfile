@@ -1,6 +1,6 @@
 FROM node:8.12-alpine
 
-COPY package.json webpack.config.js webpack.sh /tmp/
+COPY . /tmp/
 
 RUN mkdir -m 755 /app
 
