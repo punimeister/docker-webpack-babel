@@ -1,13 +1,6 @@
-# punimeister/webpack-babel
+# Supported tags and respective `Dockerfile` links
 
-[![Docker Stars](https://img.shields.io/docker/stars/punimeister/webpack-babel.svg)](https://hub.docker.com/r/punimeister/webpack-babel/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/punimeister/webpack-babel.svg)](https://hub.docker.com/r/punimeister/webpack-babel/)
-[![Docker Automated](https://img.shields.io/docker/automated/punimeister/webpack-babel.svg)](https://hub.docker.com/r/punimeister/webpack-babel/)
-[![Docker Build](https://img.shields.io/docker/build/punimeister/webpack-babel.svg)](https://hub.docker.com/r/punimeister/webpack-babel/)
-
-## Source Code
-
-### [webpack-babel:latest](https://github.com/punimeister/docker-webpack-babel/tree/master/latest)
+- [`latest` (latest/Dockerfile)](https://github.com/punimeister/docker-webpack-babel/blob/master/latest/Dockerfile)
 
 ## Environment Variables
 
