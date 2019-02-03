@@ -69,6 +69,11 @@ const commonConfig = {
       'process.env.NODE_ENV': JSON.stringify(mode),
     }),
   ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
 };
 
 const developmentConfig = {
@@ -117,7 +122,7 @@ function validate(outputDir, entry, outputFile) {
   }
 
   if (errors.length > 0) {
-    errors.push('Example: https://github.com/punimeister/docker-webpack-typescript#example');
+    errors.push('Example: https://github.com/punimeister/docker-webpack-babel#example');
     throw errors.join('\n');
   }
 }
