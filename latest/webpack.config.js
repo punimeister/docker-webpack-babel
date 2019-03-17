@@ -11,25 +11,26 @@
 const mode = process.env.MODE || 'development';
 
 /**
- * Directory in which bundle files output
- * (relative path from this file)
- * @type {string}
- */
-const outputDir = process.env.OUT_DIR || '';
-
-/**
  * entry points
  * @type {{}|string}
  * @link https://webpack.js.org/concepts/entry-points/
  */
-const entry = pickEntriesFromEnv() || '';
+const entryPoints = pickEntryPointsFromEnv() || '';
+
+/**
+ * Directory in which bundle files output
+ * (relative path from this file)
+ * @type {string}
+ */
+const outputDirectory = process.env.OUTPUT_DIR || '';
 
 /**
  * output filename
  * @type {string}
  * @link https://webpack.js.org/concepts/output/
  */
-const outputFile = process.env.OUT_FILE || '';
+const outputFilename = process.env.OUTPUT_FILE || '';
+const outputMinFilename = outputFilename.replace(/(.+)\.js$/, '$1.min.js');
 
 
 /*************************************************
@@ -37,20 +38,21 @@ const outputFile = process.env.OUT_FILE || '';
  ************************************************/
 
 try {
-  validate(outputDir, entry, outputFile);
+  validate({ entryPoints, outputDirectory, outputFilename });
 } catch (e) {
   console.log(e);
   process.exit();
 }
 
 const webpack = require('webpack');
-const path = require('path');
 const merge = require('webpack-merge');
+const { resolve } = require('path');
 
 const commonConfig = {
-  entry: entry,
+  entry: entryPoints,
   output: {
-    path: path.resolve(__dirname, outputDir),
+    path: resolve(__dirname, outputDirectory),
+    publicPath: `${resolve('/', outputDirectory)}/`,
   },
   module: {
     rules: [
@@ -79,7 +81,8 @@ const commonConfig = {
 const developmentConfig = {
   mode: 'development',
   output: {
-    filename: outputFile,
+    filename: outputFilename,
+    chunkFilename: outputFilename,
   },
   devtool: 'source-map',
   watch: true,
@@ -92,11 +95,12 @@ const developmentConfig = {
 const productionConfig = {
   mode: 'production',
   output: {
-    filename: outputFile.replace(/(.+)\.js$/, '$1.min.js'),
+    filename: outputMinFilename,
+    chunkFilename: outputMinFilename,
   },
 };
 
-module.exports = merge(commonConfig, mode === 'production' ? productionConfig : developmentConfig);
+module.exports = merge(commonConfig, (mode === 'production' ? productionConfig : developmentConfig));
 
 
 /*************************************************
@@ -104,21 +108,44 @@ module.exports = merge(commonConfig, mode === 'production' ? productionConfig : 
  ************************************************/
 
 /**
- * @param outputDir
- * @param entry
- * @param outputFile
+ * @returns {string}
  */
-function validate(outputDir, entry, outputFile) {
+function pickEntryPointsFromEnv() {
+  const entries = {};
+  const prefix = 'EP_';
+  const environments = process.env;
+  for (const key in environments) {
+    if (environments.hasOwnProperty(key) && (new RegExp(`^${prefix}`)).test(key)) {
+      entries[key.replace(prefix, '')] = environments[key];
+    }
+  }
+  return isEmptyObject(entries) ? '' : entries;
+}
+
+/**
+ * @param object
+ * @returns {boolean}
+ */
+function isEmptyObject(object) {
+  return !Object.keys(object).length;
+}
+
+/**
+ * @param entryPoints
+ * @param outputDirectory
+ * @param outputFilename
+ */
+function validate({ entryPoints, outputDirectory, outputFilename }) {
   let errors = [];
 
-  if (!outputDir) {
-    pushErrorMessage(errors, 'outputDir');
+  if (isEmptyObject(entryPoints) || !entryPoints) {
+    errors.push(createErrorMessage('entryPoints'));
   }
-  if (isEmptyObject(entry) || !entry) {
-    pushErrorMessage(errors, 'entry');
+  if (!outputDirectory) {
+    errors.push(createErrorMessage('outputDirectory'));
   }
-  if (!outputFile) {
-    pushErrorMessage(errors, 'outputFile');
+  if (!outputFilename) {
+    errors.push(createErrorMessage('outputFilename'));
   }
 
   if (errors.length > 0) {
@@ -128,32 +155,9 @@ function validate(outputDir, entry, outputFile) {
 }
 
 /**
- * @param obj
- * @returns {boolean}
- */
-function isEmptyObject(obj) {
-  return !Object.keys(obj).length;
-}
-
-/**
- * @returns {[]}
- */
-function pickEntriesFromEnv() {
-  let entries = {};
-  let prefix = 'ENTRY_';
-  let environments = process.env;
-  for (let key in environments) {
-    if (environments.hasOwnProperty(key) && (new RegExp(`^${prefix}`)).test(key)) {
-      entries[key.replace(prefix, '')] = environments[key];
-    }
-  }
-  return isEmptyObject(entries) ? '' : entries;
-}
-
-/**
- * @param context
  * @param target
+ * @returns {string}
  */
-function pushErrorMessage(context, target) {
-  context.push(`Please set ${target} variable for webpack.config.js .`);
+function createErrorMessage(target) {
+  return `Please set ${target} variable for webpack.config.js.`;
 }
