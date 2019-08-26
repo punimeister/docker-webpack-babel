@@ -39,34 +39,34 @@ Will be used for webpack output filename
 
 ### .gitignore
 
-```
+```gitignore
 node_modules
 *.js.map
 ```
 
 ### docker-compose.yml
 
-```
+```yaml
 version: '3'
 
 services:
 
   webpack-babel:
-    image: 'punimeister/webpack-babel'
-    restart: 'on-failure'
+    image: punimeister/webpack-babel
+    restart: on-failure
     environment:
-      MODE: 'development'
-      EP_test1: './web/src/entry1.js'
-      EP_test2: './web/src/entry2.js'
-      OUTPUT_DIR: './web/public'
+      MODE: development
+      EP_test1: ./web/src/entry1.js
+      EP_test2: ./web/src/entry2.js
+      OUTPUT_DIR: ./web/public
       OUTPUT_FILE: '[name].js'
     volumes:
-      - '.:/app'
+      - .:/app
 ```
 
 ### index.html
 
-```
+```html
 <!doctype html>
 <html lang="ja">
 <head>
@@ -83,12 +83,12 @@ services:
 
 ### entry1.js
 
-```
+```javascript
 document.getElementById('test').innerText = 'hello webpack';
 ```
 
 ### entry2.js
 
-```
+```javascript
 document.getElementById('test').style.color = 'skyblue';
 ```
